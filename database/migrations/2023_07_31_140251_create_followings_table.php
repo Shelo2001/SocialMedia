@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('followings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('follower_id');
+            $table->unsignedBigInteger('following_id');
+
+            $table->foreign('follower_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('following_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->index('follower_id');
+            $table->index('following_id');
             $table->timestamps();
         });
     }
