@@ -1,20 +1,26 @@
-import React, { useState } from "react";
-import bg from "../assets/bg.webp";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../services/auth";
 
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
+    const { login, errorAuth, loading, success } = useAuth();
+    const navigate = useNavigate();
 
     const submitHandler = (e) => {
         e.preventDefault();
+        login(data);
     };
 
+    useEffect(() => {
+        if (success) {
+            navigate("/home");
+        }
+    }, [success]);
+
     return (
-        <div
-            className="bg-cover bg-center h-screen"
-            style={{ backgroundImage: `url(${bg})` }}
-        >
+        <div className="bg-cover bg-center h-screen">
             <div className="flex items-center justify-center h-screen gap-10 flex-col md:flex-row">
                 <div className="flex items-center">
                     <img
@@ -31,10 +37,15 @@ const Login = () => {
                         </p>
                     </div>
                 </div>
-                <div className="bg-white w-[300px] h-[400px] md:w-[400px] md:h-[400px] rounded-[50px] flex flex-col items-center justify-center">
+                <div className="bg-white w-[300px] h-[400px] md:w-[400px] md:h-[430px] rounded-[50px] flex flex-col items-center justify-center">
                     <h1 className="text-center text-3xl font-bold text-gray-800 mt-[40px]">
                         Login
                     </h1>
+                    {errorAuth && (
+                        <p className="text-center w-[90%] p-2  bg-red-300 rounded-lg">
+                            {errorAuth}
+                        </p>
+                    )}
                     <form
                         className="flex flex-col gap-6 w-[80%] m-auto mt-[30px]"
                         onSubmit={submitHandler}
@@ -67,7 +78,7 @@ const Login = () => {
                             type="submit"
                             className=" px-4 py-2 bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-200 text-gray-100 font-semibold text-lg rounded-lg"
                         >
-                            Login
+                            {loading ? "Loading..." : "Login"}
                         </button>
                         <hr></hr>
                         <p className="text-center">

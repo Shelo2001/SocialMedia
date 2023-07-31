@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
+import Navbar from "./Navbar";
 
 const DefaultLayout = () => {
     const token = localStorage.getItem("token");
@@ -13,6 +14,7 @@ const DefaultLayout = () => {
 
     return (
         <div>
+            <Navbar />
             <Outlet />
         </div>
     );
