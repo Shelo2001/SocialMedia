@@ -15,4 +15,11 @@ class UserController extends Controller
 
         return response()->json(['users' => $users]);
     }
+
+    public function getUserById($userId)
+    {
+        $user = User::where('id',$userId)->with('following.followingUser')->with('followers.followerUser')->first();
+
+        return response()->json(['user' => $user]);
+    }
 }

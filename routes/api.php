@@ -15,5 +15,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 Route::get('/users/search', [UserController::class,'search']);
+Route::get('/users/{userId}', [UserController::class,'getUserById']);
 Route::post('/follow', [FollowingController::class, 'follow']);
 Route::delete('/unfollow', [FollowingController::class, 'unfollow']);
