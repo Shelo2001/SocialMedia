@@ -51,8 +51,6 @@ const UserProfile = () => {
         setIsFollowing(true);
     };
 
-    console.log(isFollowing);
-
     return (
         <div>
             {loading ? (
