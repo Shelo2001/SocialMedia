@@ -20,3 +20,4 @@ Route::get('/users/{userId}', [UserController::class,'getUserById']);
 Route::post('/follow', [FollowingController::class, 'follow']);
 Route::post('/unfollow', [FollowingController::class, 'unfollow']);
 Route::post('/sendmessage', [MessageController::class, 'sendMessage']);
+Route::post('/getmessages', [MessageController::class, 'getMessages']);

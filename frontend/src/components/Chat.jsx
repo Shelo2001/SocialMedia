@@ -5,6 +5,7 @@ import pusher from "../services/pusher";
 import InputEmoji from "react-input-emoji";
 import { useMessages } from "../services/messages";
 import { getTimeDifference } from "../services/getTimeDifference";
+import axios from "axios";
 
 const Chat = ({ selectedUser }) => {
     const [message, setMessage] = useState("");
@@ -28,6 +29,23 @@ const Chat = ({ selectedUser }) => {
 
         sendMessage(data);
     };
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/getmessages`,
+                {
+                    sender_id: user.id,
+                    recipient_id: selectedUser?.following_user?.id,
+                }
+            );
+            setMessages(response.data.messages);
+        };
+
+        if (selectedUser) {
+            fetchMessages();
+        }
+    }, [selectedUser]);
 
     useEffect(() => {
         if (selectedUser) {
