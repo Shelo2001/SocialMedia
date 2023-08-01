@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FollowingController;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -18,3 +19,4 @@ Route::get('/users/search', [UserController::class,'search']);
 Route::get('/users/{userId}', [UserController::class,'getUserById']);
 Route::post('/follow', [FollowingController::class, 'follow']);
 Route::post('/unfollow', [FollowingController::class, 'unfollow']);
+Route::post('/sendmessage', [MessageController::class, 'sendMessage']);

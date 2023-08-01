@@ -1,23 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import avatar from "../assets/avatar.png";
 import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
+import pusher from "../services/pusher";
+import InputEmoji from "react-input-emoji";
+import Pusher from "pusher-js";
+import { useMessages } from "../services/messages";
 
 const Chat = ({ selectedUser }) => {
     const [message, setMessage] = useState("");
     const [file, setFile] = useState(null);
     const [messages, setMessages] = useState([]);
+    const { sendMessage } = useMessages();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const handleSendMessage = () => {
-        if (message.trim() !== "") {
-            setMessages([...messages, { type: "text", content: message }]);
-            setMessage("");
-            setFile(null);
-        }
+        let data = {
+            message,
+            sender_id: user.id,
+            recipient_id: selectedUser?.following_user?.id,
+        };
+
+        sendMessage(data);
     };
+
+    Pusher.logToConsole = true;
+
+    useEffect(() => {
+        if (selectedUser) {
+            const channel = pusher.subscribe(
+                `chat${Math.min(
+                    user.id,
+                    selectedUser?.following_user?.id
+                )}${Math.max(user.id, selectedUser?.following_user?.id)}`
+            );
+            channel.bind(`sendmessage`, function (data) {
+                console.log(data);
+                setMessages((prevMessages) => [...prevMessages, data]);
+            });
+        }
+
+        return () => {
+            setMessages([]);
+        };
+    }, [selectedUser]);
 
     return (
         <div className="bg-opacity-70 h-full bg-white rounded-lg">
@@ -38,7 +69,9 @@ const Chat = ({ selectedUser }) => {
                     </div>
 
                     <div className="p-4 border-t-2 flex-grow max-h-[calc(100vh-300px)] overflow-auto">
-                        <div className="my-2"></div>
+                        {messages.map((m) => (
+                            <div className="my-2">{m.message}</div>
+                        ))}
                     </div>
 
                     <div className="fixed bottom-[5vh] left-[24.7vh] right-[4vh] md:bottom-[5vh] md:left-[45.7vh] md:right-[4vh] p-4 ">
@@ -55,12 +88,11 @@ const Chat = ({ selectedUser }) => {
                             >
                                 {file ? file.name : <AiOutlinePlus />}
                             </label>
-                            <input
-                                type="text"
+
+                            <InputEmoji
                                 value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                className="flex-grow px-4 py-2 bg-gray-200 mx-4 rounded-lg"
-                                placeholder="Type your message..."
+                                onChange={setMessage}
+                                placeholder="Type a message"
                             />
                             <button
                                 onClick={handleSendMessage}

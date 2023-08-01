@@ -9,8 +9,6 @@ const Home = () => {
         setSelectedUser(u);
     };
 
-    console.log(selectedUser);
-
     return (
         <div className="flex h-[86.5vh] m-10 gap-10">
             <div className="w-1/5 ">
