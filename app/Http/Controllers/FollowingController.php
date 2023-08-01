@@ -17,7 +17,7 @@ class FollowingController extends Controller
     }
 
     public function unfollow(Request $request){
-       $following = Following::where('following_id', $request->following_id)->where("following_id", $request->following_id)->first();
+       $following = Following::where('following_id', $request->following_id)->where("follower_id", $request->follower_id)->first();
 
        $following->delete();
         
