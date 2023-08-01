@@ -1,21 +1,17 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../services/auth";
-import { AiFillSetting } from "react-icons/ai";
+import { IoIosNotifications } from "react-icons/io";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown() {
-    const { logout } = useAuth();
-
+export default function Notifications() {
     return (
         <Menu as="div" className=" relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex justify-center outline-none w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 ">
-                    <AiFillSetting size={20} />
+                    <IoIosNotifications size={20} />
                 </Menu.Button>
             </div>
 
@@ -24,23 +20,7 @@ export default function Dropdown() {
                     <div className="py-1">
                         <Menu.Item>
                             {({ active }) => (
-                                <Link
-                                    to="/profile"
-                                    className={classNames(
-                                        active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                        "block px-4 py-2 text-sm"
-                                    )}
-                                >
-                                    Profile
-                                </Link>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
                                 <button
-                                    onClick={() => logout()}
                                     className={classNames(
                                         active
                                             ? "bg-gray-100 text-gray-900"
@@ -48,7 +28,7 @@ export default function Dropdown() {
                                         "block w-full text-left px-4 py-2 text-sm"
                                     )}
                                 >
-                                    Sign out
+                                    a.name
                                 </button>
                             )}
                         </Menu.Item>

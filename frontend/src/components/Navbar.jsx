@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
     return (
@@ -13,7 +14,8 @@ const Navbar = () => {
                 </Link>
                 <Search />
             </div>
-            <div>
+            <div className="flex gap-[20px]">
+                <Notifications />
                 <Dropdown />
             </div>
         </div>
