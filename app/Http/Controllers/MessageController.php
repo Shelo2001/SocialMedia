@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class MessageController extends Controller
 {
@@ -16,8 +17,10 @@ class MessageController extends Controller
                 'message' => 'required|string',
             ]);
     
+            $timestamp = Carbon::now()->toIso8601String();
+
             $channel = 'chat' . min($request->sender_id, $request->recipient_id)  . max($request->sender_id, $request->recipient_id);
-            event(new MessageEvent($request->message, $channel));
+            event(new MessageEvent($request->message, $channel, $request->sender_id, $request->recipient_id,$timestamp));
 
             return response()->json(["success"=>true]);
     }

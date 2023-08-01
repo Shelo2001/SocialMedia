@@ -15,11 +15,17 @@ class MessageEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
     public $channel;
+    public $sender_id;
+    public $recipient_id;
+    public $created_at;
 
-    public function __construct($message,$channel)
+    public function __construct($message,$channel,$sender_id,$recipient_id,$created_at)
     {
         $this->message = $message;
         $this->channel = $channel;
+        $this->sender_id = $sender_id;
+        $this->recipient_id = $recipient_id;
+        $this->created_at = $created_at;
     }
   
     public function broadcastOn()
@@ -30,5 +36,15 @@ class MessageEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'sendmessage';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'message' => $this->message,
+            'sender_id' => $this->sender_id,
+            'recipient_id' => $this->recipient_id,
+            'created_at' => $this->created_at,
+        ];
     }
 }

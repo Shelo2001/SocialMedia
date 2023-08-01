@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useSearch } from "../services/search";
 import Loader from "../components/Loader";
 import ModalUsers from "../components/ModalUsers";
+import { getTimeDifference } from "../services/getTimeDifference";
 import { useFollowing } from "../services/following";
 
 const UserProfile = () => {
@@ -69,7 +70,10 @@ const UserProfile = () => {
                             </h1>
                         </div>
                         <h1 className="text-center">
-                            Registered at {`${day}.${month}.${year}`}
+                            {getTimeDifference(
+                                userProfile.created_at,
+                                "Registered"
+                            )}
                         </h1>
                         <div className="flex mt-16 gap-5 justify-center">
                             <ModalUsers
