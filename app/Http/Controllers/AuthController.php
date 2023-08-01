@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\UserStatusUpdated;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -21,6 +22,11 @@ class AuthController extends Controller
             'password' => bcrypt($attr['password']),
             'email' => $attr['email']
         ]);
+        $user->is_online=true;
+        $user->save();
+
+        event(new UserStatusUpdated($user->id,"Online"));
+
         $token = $user->createToken('Tokens')->plainTextToken;
         return response([
             "token"=>$token,
@@ -41,6 +47,10 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        $user->is_online=true;
+        $user->save();
+
+        event(new UserStatusUpdated($user->id,"Online"));
 
         return response([
             'token' => auth()->user()->createToken('Tokens')->plainTextToken,
@@ -50,6 +60,11 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         auth()->user()->currentAccessToken()->delete();
+        $user=auth()->user();
+        $user->is_online=false;
+        $user->save();
+
+        event(new UserStatusUpdated($user->id,"Offline"));
 
         return response(["message"=>"Successfully logged out"],200);
     }

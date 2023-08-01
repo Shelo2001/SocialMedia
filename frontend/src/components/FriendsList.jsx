@@ -31,7 +31,11 @@ const FriendsList = ({ onUserCardClick }) => {
                         />
                         <div>
                             <p>{u?.following_user?.fullname}</p>
-                            <p>status</p>
+                            {u?.following_user?.is_online ? (
+                                <p className=" text-green-300">Online</p>
+                            ) : (
+                                <p className=" text-red-300">Offline</p>
+                            )}
                         </div>
                     </div>
                 ))
