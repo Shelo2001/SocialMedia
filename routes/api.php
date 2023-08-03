@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FollowingController;
+use App\Http\Controllers\NotificationsController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,3 +22,6 @@ Route::post('/follow', [FollowingController::class, 'follow']);
 Route::post('/unfollow', [FollowingController::class, 'unfollow']);
 Route::post('/sendmessage', [MessageController::class, 'sendMessage']);
 Route::post('/getmessages', [MessageController::class, 'getMessages']);
+Route::put('/notifications/{notificationsId}/seen',[NotificationsController::class, 'setNotificationsToSeen']);
+Route::post('/notifications/delete',[NotificationsController::class, 'deleteNotifications']);
+Route::get('/notifications/{userId}',[NotificationsController::class, 'getNotifications']);

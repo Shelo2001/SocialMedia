@@ -16,11 +16,6 @@ const UserProfile = () => {
         getUserById(id);
     }, [id]);
 
-    const date = new Date(userProfile?.created_at);
-    const year = date.getUTCFullYear();
-    const month = date.getUTCMonth() + 1;
-    const day = date.getUTCDate();
-
     const hasFollowed = () => {
         return userProfile?.followers?.some(
             (follower) => follower.follower_id == user.id
@@ -37,6 +32,7 @@ const UserProfile = () => {
         let data = {
             following_id: userProfile.id,
             follower_id: user.id,
+            username: user.fullname,
         };
 
         await unfollow(data);
@@ -47,6 +43,7 @@ const UserProfile = () => {
         let data = {
             follower_id: user.id,
             following_id: userProfile.id,
+            username: user.fullname,
         };
         await follow(data);
         setIsFollowing(true);

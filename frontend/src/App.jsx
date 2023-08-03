@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
 import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile/:id/:fullname",
                 element: <UserProfile />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
             },
         ],
     },
