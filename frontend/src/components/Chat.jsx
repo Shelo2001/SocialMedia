@@ -28,6 +28,13 @@ const Chat = ({ selectedUser }) => {
         };
 
         sendMessage(data);
+        setMessage("");
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSendMessage();
+        }
     };
 
     useEffect(() => {
@@ -141,6 +148,7 @@ const Chat = ({ selectedUser }) => {
                                 value={message}
                                 onChange={setMessage}
                                 placeholder="Type a message"
+                                onKeyDown={handleKeyPress}
                             />
                             <button
                                 onClick={handleSendMessage}
