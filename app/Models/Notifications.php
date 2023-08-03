@@ -10,10 +10,10 @@ class Notifications extends Model
     use HasFactory;
 
     protected $fillable=[
-        "message",
         "action",
         "user_id",
         "username",
+        "action_user_id",
         "is_seen",
     ];
 }

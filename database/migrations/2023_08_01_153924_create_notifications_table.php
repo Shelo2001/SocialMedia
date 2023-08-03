@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('action');
             $table->string('user_id');
             $table->string('username');
+            $table->string('action_user_id');
             $table->boolean('is_seen')->default(false);
             $table->timestamps();
         });
