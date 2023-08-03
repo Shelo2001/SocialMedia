@@ -10,6 +10,28 @@ use Illuminate\Support\Carbon;
 class MessageController extends Controller
 {
    
+/**
+ * @OA\Post(
+ *     path="/api/sendmessage",
+ *     summary="Send a message",
+ *     tags={"Messages"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="sender_id", type="integer", example="1"),
+ *             @OA\Property(property="recipient_id", type="integer", example="2"),
+ *             @OA\Property(property="message", type="string", example="Hello, how are you?"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Message sent successfully",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *         ),
+ *     ),
+ * )
+ */
     public function sendMessage(Request $request)
     {
             $data = $request->validate([
@@ -33,6 +55,27 @@ class MessageController extends Controller
             return response()->json(["success"=>true]);
     }
 
+/**
+ * @OA\Post(
+ *     path="/api/getmessages",
+ *     summary="Get messages",
+ *     tags={"Messages"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="sender_id", type="integer", example="1"),
+ *             @OA\Property(property="recipient_id", type="integer", example="2"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Messages retrieved successfully",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="messages", type="array", @OA\Items(type="object")),
+ *         ),
+ *     ),
+ * )
+ */    
     public function getMessages(Request $request)
     {
             $sender_id = $request->sender_id;
