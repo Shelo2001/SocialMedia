@@ -17,7 +17,6 @@ export default function Notifications() {
     const { setNotificationsToSeen, deleteNotifications } = useNotifications();
     console.log(notifications);
 
-    Pusher.logToConsole = true;
     useEffect(() => {
         const channel = pusher.subscribe(`useractions.${user.id}`);
 
